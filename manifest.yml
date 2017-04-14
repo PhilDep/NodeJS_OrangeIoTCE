@@ -1,0 +1,12 @@
+---
+applications:
+- disk_quota: 1024M
+  host: MWCOrangeDeviceList
+  name: MWCOrangeDeviceList
+  path: .
+  domain: eu-gb.mybluemix.net
+  instances: 1
+  memory: 256M
+  services:
+  - orange-m2m
+  - iot-foundation

@@ -1,0 +1,17 @@
+{
+    "services": {
+
+        "Orange M2M v2 : Sandbox 569ff3d20cf276a5501e9aa0 prod": [
+            {
+                "name": "orange-m2m",
+                "label": "Orange M2M v2 : Sandbox 569ff3d20cf276a5501e9aa0 prod",
+                "plan": "Orange M2M v2 : Sandbox prod",
+                "credentials": {
+                    "client_id": "e118b5ef-e5e4-416c-aa4f-e849b641b9c2",
+                    "client_secret": "K8vG6wO7qS6dO2wU7vM0qV7sG7kK6xM7hJ0aE7bI4wP8cK6cW6",
+                    "url": "https://api.eu.apim.ibmcloud.com/lionel-mace-orange/sb/ConnectivityDirectory1"
+                }
+      }
+   ]
+    }
+}
