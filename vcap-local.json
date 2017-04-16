@@ -1,17 +1,15 @@
 {
-  "services": {
-    "user-provided": [ 
-      { 
-         "syslog_drain_url": "",
-         "label": "user-provided",
-         "name": "TestOrangeIoT",
-         "tags": [] ,
-        "credentials": { 
-            "login": "ORANGE_OPEN_API-f1e1eeca842919725e07d20999676",
-             "password": "]l,WT4iq",
-             "url": "https://iosw-ba.orange.com/MLM_EXT_IMC/" 
-        }
-      } 
-    ] 
-  }
+    "services": {
+        "user-provided": [{
+            "name": "TestOrangeIoT",
+            "label": "user-provided",
+            "tags": [],
+            "credentials": {
+                "login": "ORANGE_OPEN_API-f1e1eeca842919725e07d20999676",
+                "password": "]l,WT4iq",
+                "url": "https://iosw-ba.orange.com/MLM_EXT_IMC/"
+            },
+            "syslog_drain_url": "http://example.com/syslog"
+        }]
+    }
 }

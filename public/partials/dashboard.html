@@ -9,8 +9,6 @@
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
       <h1 class="page-header">Devices</h1>
 
-      <!-- h2 class="sub-header">Devices</h2-->
-
       <form role="search">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
@@ -22,31 +20,18 @@
           <thead>
             <tr>
               <th>Device ID</th>
-              <th>City</th>
               <th>SIM Status</th>
-              <th>Air Quality</th>
               <th>Alert</th>
             </tr>
           </thead>
           <tbody>
             <tr ng-repeat="device in controller.data.devices | filter:searchText">
               <td>{{device.sim.serialNumber}}</td>
-              <td>{{device.sim.location.city}}</td>
               <td><span class="sim-status-{{device.sim.status}}">{{device.sim.status}}</span></td>
-              <td>{{device.gasValue}}</td>
               <td><i class="fa fa-circle alert-{{device.alert}}"></i></td>
             </tr>
           </tbody>
         </table>
-
-
-    <!-- Code de YH BEGIN -->
-    <table>
-		<tr>
-			<td><label id="payload" class="col-sm-2 control-label"></label></td>
-		</tr>
-	</table>
-    <!-- Code de YH END -->
 
       </div>
     </div>

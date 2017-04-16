@@ -16,28 +16,35 @@ try {
 }
 
 //Get app variables from Bluemix, defaulting to local VCAP
-var appEnvOpts = vcapLocal ? {
-	vcap: vcapLocal
-} : {};
+var appEnvOpts = vcapLocal ? { vcap: vcapLocal } : {};
 var appEnv = cfenv.getAppEnv(appEnvOpts);
 
 //Set up objects to talk to API Management
-//var orangeCreds = appEnv.getServiceCreds("orange-m2m")
-console.log(appEnv.getServices())
+// console.log('LMA services', appEnv.getServices())
 var orangeCreds = appEnv.getServiceCreds("TestOrangeIoT")
-console.log(orangeCreds)
+
+//LMA
+var auth = 'Basic ' + new Buffer(orangeCreds.login + ':' + orangeCreds.password).toString('base64');
 
 var options = {
 	method: 'POST',
 	url: orangeCreds.url,
-	qs: {
-		client_id: orangeCreds.client_id
-	},
 	headers: {
-		authorization: 'Basic T1JBTkdFX09QRU5fQVBJLTJmOTBmNjJiYjQ5MGRhNTU5MDBlZDI1NzgyNmZlOighS1k2WjVx',
+		authorization: auth,
 		'content-type': 'text/xml;charset=UTF-8'
 	}
 }
+// var options = {
+// 	method: 'POST',
+// 	url: orangeCreds.url,
+// 	qs: {
+// 		client_id: orangeCreds.client_id
+// 	},
+// 	headers: {
+// 		authorization: 'Basic T1JBTkdFX09QRU5fQVBJLTJmOTBmNjJiYjQ5MGRhNTU5MDBlZDI1NzgyNmZlOighS1k2WjVx',
+// 		'content-type': 'text/xml;charset=UTF-8'
+// 	}
+// }
 
 
 //-------------------------------------------------------------
@@ -86,18 +93,41 @@ router.get('/devices/:id', function (req, res) {
 //GET All Connectivty Directory in JSON
 //Calling directly Orange API
 //-------------------------------------------------------------
-router.get('/devices', function (req, res) {
+router.get('/devices', function (req, res)
+{
+	var auth = 'Basic ' + new Buffer(orangeCreds.login + ':' + orangeCreds.password).toString('base64');
+
 	var options = {
-			method: 'POST',
-			url: 'https://iosw-ba.orange.com:443/MLM_EXT_IMC/ConnectivityDirectory-1',
-			headers: {
-				'postman-token': 'ad4567b5-3d71-6916-3c5b-ee0327e4bd73',
-				'cache-control': 'no-cache',
-				authorization: 'Basic T1JBTkdFX09QRU5fQVBJLTJmOTBmNjJiYjQ5MGRhNTU5MDBlZDI1NzgyNmZlOighS1k2WjVx',
-				'content-type': 'text/xml;charset=UTF-8'
-			},
-			body: '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" \nxmlns:v1="http://webservice.malima.francetelecom.com/v1" \nxmlns:con="http://connectivityDirectory.types.malima.francetelecom.com" \nxmlns:com="http://common.types.malima.francetelecom.com">\n   <soapenv:Header/>\n   <soapenv:Body>\n      <v1:searchInConnectivityDirectory>\n      </v1:searchInConnectivityDirectory>\n   </soapenv:Body>\n</soapenv:Envelope>'
-	};
+		method: 'POST',
+		url: orangeCreds.url + 'ConnectivityDirectory-1',
+		headers: {
+			authorization: auth,
+			'content-type': 'text/xml;charset=UTF-8'
+		},
+		body: '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"  ' +
+					'\nxmlns:v1="http://webservice.malima.francetelecom.com/v1"  ' +
+					'\nxmlns:con="http://connectivityDirectory.types.malima.francetelecom.com"  ' +
+					'\nxmlns:com="http://common.types.malima.francetelecom.com"> ' +
+					'\n   <soapenv:Header/> ' +
+					'\n   <soapenv:Body> ' +
+					'\n      <v1:searchInConnectivityDirectory> ' +
+					'\n      </v1:searchInConnectivityDirectory> ' +
+					'\n   </soapenv:Body> ' +
+					'\n</soapenv:Envelope>'
+	}
+
+  // Directo call to Orange API bypassing Bluemix API
+	// var options = {
+	// 		method: 'POST',
+	// 		url: 'https://iosw-ba.orange.com:443/MLM_EXT_IMC/ConnectivityDirectory-1',
+	// 		headers: {
+	// 			'postman-token': 'ad4567b5-3d71-6916-3c5b-ee0327e4bd73',
+	// 			'cache-control': 'no-cache',
+	// 			authorization: 'Basic T1JBTkdFX09QRU5fQVBJLTJmOTBmNjJiYjQ5MGRhNTU5MDBlZDI1NzgyNmZlOighS1k2WjVx',
+	// 			'content-type': 'text/xml;charset=UTF-8'
+	// 		},
+	// 		body: '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" \nxmlns:v1="http://webservice.malima.francetelecom.com/v1" \nxmlns:con="http://connectivityDirectory.types.malima.francetelecom.com" \nxmlns:com="http://common.types.malima.francetelecom.com">\n   <soapenv:Header/>\n   <soapenv:Body>\n      <v1:searchInConnectivityDirectory>\n      </v1:searchInConnectivityDirectory>\n   </soapenv:Body>\n</soapenv:Envelope>'
+	// };
 
 	request(options, function (error, response, body) {
 		if (error) throw new Error(error);
@@ -122,78 +152,13 @@ router.get('/devices', function (req, res) {
 			//res.send(jsonResponse.connectivityDirectory)
 			// return only the information needed, further details can be retrieved with /devices/:id
 
-			var staticLocations = {}
-			staticLocations["2310300471761"] = {
-				city: "Barcelona",
-				lat: 41.385064,
-				lon: 2.173403
-			}
-
-			staticLocations["2310300471779"] = {
-				city: "Paris",
-				lat: 41.385064,
-				lon: 2.173403
-			}
-			staticLocations["2320300295664"] = {
-				city: "Bruxelles",
-				lat: 41.385064,
-				lon: 2.173403
-			}
-			staticLocations["2413600000023"] = {
-				city: "Munich",
-				lat: 41.385064,
-				lon: 2.173403
-			}
-			staticLocations["2413600004488"] = {
-				city: "Rome",
-				lat: 41.385064,
-				lon: 2.173403
-			}
-			staticLocations["2413600004371"] = {
-				city: "London",
-				lat: 41.385064,
-				lon: 2.173403
-			}
-			staticLocations["2413600004355"] = {
-				city: "Madrid",
-				lat: 41.385064,
-				lon: 2.173403
-			}
-			staticLocations["2413600004348"] = {
-				city: "Zurich",
-				lat: 41.385064,
-				lon: 2.173403
-			}
-			staticLocations["2413600004272"] = {
-				city: "Amsterdam",
-				lat: 41.385064,
-				lon: 2.173403
-			}
-			staticLocations["2120300465493"] = {
-				city: "Montpellier",
-				lat: 41.385064,
-				lon: 2.173403
-			}
-
-
 			res.send(jsonResponse.connectivityDirectory.map(function (value) {
-
-				var simLocation
-				if (staticLocations.hasOwnProperty(value.sim.serialNumber)) {
-					simLocation = staticLocations[value.sim.serialNumber];
-				} else {
-					simLocation = {
-							city: "Paris",
-							lat: 48.787176,
-							lon: 2.219097
-					};
-				}
 
 				return {
 					sim: {
 						serialNumber: value.sim.serialNumber,
 						status: value.sim.status,
-						location: simLocation
+						// location: simLocation
 					}
 				}
 			}));

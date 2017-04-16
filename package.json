@@ -1,7 +1,7 @@
 {
-    "name": "orange-m2m",
+    "name": "orange-simpleapitest",
     "version": "1.0.0",
-    "description": "Orange M2M - Bluemix Demo for MWC",
+    "description": "Orange M2M - Simple API Test",
     "scripts": {
         "start": "node app.js",
         "postinstall": "bower install --allow-root"
@@ -14,9 +14,6 @@
         "express": "^4.13.3",
         "request": "^2.67.0",
         "serve-favicon": "^2.3.0",
-        "xml2js": "^0.4.16",
-        "ws": "0.4.31",
-        "mqtt": "1.4",
-        "ibmiotf": "x"
+        "xml2js": "^0.4.16"
     }
 }

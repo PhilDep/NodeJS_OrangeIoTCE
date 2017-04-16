@@ -3,7 +3,7 @@
   "description": "",
   "main": "app.js",
   "authors": [
-    "Frederic Lavigne <frederic.lavigne@fr.ibm.com>"
+    "Lionel Mace <lionel.mace@fr.ibm.com>"
   ],
   "license": "Apache-2.0",
   "moduleType": [],

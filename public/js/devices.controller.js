@@ -3,7 +3,7 @@
 (function () {
 	"use strict";
 
-	function DeviceController($scope, $location, DeviceService, $stateParams) {
+	function DeviceController($scope, DeviceService, $stateParams) {
 		console.info("Initializing DeviceController");
 		var controller = this;
 
@@ -24,6 +24,6 @@
 		var filter = '{"client":"ok"}';
 	}
 
-	angular.module('app').controller('DeviceController', ['$scope', '$location', 'DeviceService', '$stateParams', DeviceController]);
+	angular.module('app').controller('DeviceController', ['$scope', 'DeviceService', '$stateParams', DeviceController]);
 
 }());
