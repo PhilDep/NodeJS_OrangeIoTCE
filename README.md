@@ -1,17 +1,102 @@
-This README.md file is displayed on your project page. You should edit this 
-file to describe your project, including instructions for building and 
-running the project, pointers to the license under which you are making the 
-project available, and anything else you think would be useful for others to
-know.
 
-We have created an empty license.txt file for you. Well, actually, it says,
-"<Replace this text with the license you've chosen for your project.>" We 
-recommend you edit this and include text for license terms under which you're
-making your code available. A good resource for open source licenses is the 
-[Open Source Initiative](http://opensource.org/).
+# Introduction
+This sample demonstrates how to consume the Orange M2M API from a Node.js application.
 
-Be sure to update your project's profile with a short description and 
-eye-catching graphic.
+![](./images/orange-sample-screenshot.png)
 
-Finally, consider defining some sprints and work items in Track & Plan to give 
-interested developers a sense of your cadence and upcoming enhancements.
+# How to use it
+
+1. Download this project
+1. Create an instance of the Orange service
+    ```
+    bx cf create-service <service-name> <service-plan> <myservice-name>
+    ```
+1. Bind this service to this application by editing the **manifest.yml**
+    ```yml
+    ---
+    applications:
+    - disk_quota: 1024M
+      name: orange-simpleapitest
+      path: .
+      buildpack: sdk-for-nodejs
+      instances: 1
+      memory: 256M
+      services:
+      - ENTER THE NAME OF YOUR SERVICE HERE
+    ```
+1. Push this project to Bluemix
+    ```
+    bx cf push
+    ```
+1. Go to Bluemix
+
+# Resources
+This sample contains additional API resources to retrieve SIM details in JSON format.
+
+```http
+    http://<hostname>/m2m/devices
+```
+
+```json
+  {
+    "sim": {
+      "serialNumber": "2320300294956",
+      "status": "ACTIVATED"
+    }
+    },
+    {
+      "sim": {
+        "serialNumber": "2310300475382",
+        "status": "ACTIVATED"
+      }
+    }
+```
+
+```http
+    http://<hostname>/m2m/devices/<device-id>
+```
+
+```json
+  {
+    "customerEnvironmentIdentifier": "50000022",
+      "sim": {
+        "serialNumber": "2320300294956",
+        "puk1": "42168269",
+        "puk2": "26935883",
+        "imei": "3544230215453101",
+        "status": "ACTIVATED",
+        "lastStatusRefreshDate": "2017-04-01T04:00:16+02:00",
+        "lastStatusChangeDate": "2015-01-31T12:09:57+01:00"
+      },
+      "subscription": {
+        "identifier": "34000324",
+        "description": {
+          "value": "M2M automotive",
+          "service": [
+          "APN orange.fr 3G",
+          "roaming control option",
+          "12 month test mode flag",
+          "voice calls white list",
+          "SMA TEST NOCATCT1            ",
+          "multimedia content filtering ",
+          "SMA PROD NOCATCP1            ",
+          "SMA PROD NOCATCP2            ",
+          "APN orange.acte 3G",
+          "SMA TEST NOCATCT2            ",
+          "APN orange 3G",
+          "orange.m2m.spec APN          "
+          ]
+      },
+      "creationDate": "2013-05-07T00:00:00+02:00",
+      "connectionDate": "2013-05-07T00:00:00+02:00",
+      "msisdnVoice": {
+        "cc": "33",
+        "sn": "632498745"
+      }
+      },
+      "customerIdentifier": {
+        "type": "SIREN",
+        "identifier": "428706097"
+    }
+  }
+```
