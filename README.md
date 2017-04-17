@@ -6,10 +6,10 @@ This sample demonstrates how to consume the Orange M2M API from a Node.js applic
 
 # How to use it
 
-1. Download this project
+1. Clone this project
 1. Create an instance of the Orange service
     ```
-    bx cf create-service <service-name> <service-plan> <myservice-name>
+    bx service create <service-name> <service-plan> <myservice-name>
     ```
 1. Bind this service to this application by editing the **manifest.yml**
     ```yml
