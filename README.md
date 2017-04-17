@@ -100,3 +100,7 @@ This sample contains additional API resources to retrieve SIM details in JSON fo
     }
   }
 ```
+
+# Test your API outside Bluemix
+This project comes with a Postmam json file ready to test Orange API.
+Make sure to update your username and password first.
