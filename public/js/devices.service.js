@@ -3,9 +3,9 @@
   "use strict";
 
   function DeviceService($http, $q) {
-    
+
     console.log("Initializing DeviceService...");
-    
+
     return {
       getDevices: function () {
         var deferred = $q.defer();
